@@ -1,5 +1,8 @@
-import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { PaletteMode } from "@mui/material";
 
 interface RootLayoutProps {
   children: JSX.Element;
@@ -9,12 +12,15 @@ function RootLayout({ children }: RootLayoutProps) {
   const location = useLocation();
   console.log("location.pathname", location.pathname);
 
+  const [mode, setMode] = React.useState<PaletteMode>("light");
+  const defaultTheme = createTheme({ palette: { mode } });
+
   return (
     <>
-      <h1>Main Navigation</h1>
-      <Link to="/stockAnalysis">Go to Analysis Page</Link> &nbsp;
-      <Link to="/">Go to Search Page</Link>
-      <main>{children}</main>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <main>{children}</main>
+      </ThemeProvider>
     </>
   );
 }
